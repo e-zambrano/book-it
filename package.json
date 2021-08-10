@@ -4,7 +4,8 @@
   "description": "Sample nodejs, express app with jwt token",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js"
+    "start": "node index.js",
+    "nodemon": "nodemon ./index.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,14 @@
   },
   "homepage": "https://github.com/e-zambrano/book-it#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.12"
+  },
+  "engines": {
+    "node": "v12.22.3"
   }
 }

@@ -7,12 +7,7 @@ function getAllBooks(_, response) {
 
 function getBookById(request, response) {
   const { id } = request.params;
-  const book = find(books, { id: +id });
-
-  if (!book) {
-    response.send(`No book found. Book Id: ${id}`);
-  }
-
+  const book = findBook(id);
   response.json(book);
 }
 
@@ -28,11 +23,7 @@ function createBook(request, response) {
 function updateBook(request, response) {
   const bookFromRequest = request.body;
   const { id } = request.params;
-  const book = find(books, { id: +id });
-
-  if (!book) {
-    response.send(`No book found. Book Id: ${id}`);
-  }
+  const book = findBook(id);
 
   //prevent id to be updated
   delete bookFromRequest.id;
@@ -44,20 +35,21 @@ function updateBook(request, response) {
 
 function deleteBook(request, response) {
   const { id } = request.params;
-  let book = find(books, { id: +id });
+  findBook(id);
+
+  remove(books, (book) => book.id === +id);
+
+  response.status(204).send("Book deleted");
+}
+
+function findBook(id) {
+  const book = find(books, { id: +id });
 
   if (!book) {
     response.send(`No book found. Book Id: ${id}`);
   }
 
-  remove(books, (book) => book.id === +id);
-
-  //check if book got deleted
-  book = find(books, { id: +id });
-
-  if (!book) {
-    response.status(204).send("Book deleted");
-  }
+  return book;
 }
 
 module.exports = {
