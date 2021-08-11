@@ -11,3 +11,24 @@ function getUserById(request, response) {
 
   response.json(user);
 }
+
+function getUserByEmail(email) {
+  const user = find(users, { email });
+
+  if (!user) {
+    return null;
+  }
+
+  return user;
+}
+
+function createUser(email, password, name) {
+  const newUser = { email, password, name };
+  newUser.id = users.length + 1;
+
+  users.push(newUser);
+
+  return newUser;
+}
+
+module.exports = { getUserById, getUserByEmail, createUser };
