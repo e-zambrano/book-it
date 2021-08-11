@@ -2,11 +2,12 @@ const { find } = require("lodash");
 const users = require("../db/users");
 
 function getUserById(request, response) {
-  const { id } = +request.params;
+  const { id } = request.user;
   const user = find(users, { id });
 
   if (!user) {
-    response.send(`No user found. User Id: ${id}`);
+    response.send(`No user found. User Id: ${user.id}`);
+    return;
   }
 
   response.json(user);

@@ -1,12 +1,17 @@
+require("dotenv").config();
 const express = require("express");
-const expressApp = express();
-const port = process.env.PORT || 3000;
+const cors = require("cors");
+
 const booksRoute = require("./routes/books");
 const usersRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 
+const expressApp = express();
+const port = process.env.PORT || 3000;
+
 expressApp.use(express.urlencoded({ extended: true }));
 expressApp.use(express.json());
+expressApp.use(cors());
 expressApp.use(booksRoute);
 expressApp.use(usersRoute);
 expressApp.use(authRoute);

@@ -1,15 +1,16 @@
 const router = require("express").Router();
 const bookController = require("../controllers/books");
+const { authenticateJwtToken } = require("../controllers/auth");
 
 router
   .route("/books")
-  .get(bookController.getAllBooks)
-  .post(bookController.createBook);
+  .get(authenticateJwtToken, bookController.getAllBooks)
+  .post(authenticateJwtToken, bookController.createBook);
 
 router
-  .route("book/:id")
-  .get(bookController.getBookById)
-  .put(bookController.updateBook)
-  .delete(bookController.deleteBook);
+  .route("/books/:id")
+  .get(authenticateJwtToken, bookController.getBookById)
+  .put(authenticateJwtToken, bookController.updateBook)
+  .delete(authenticateJwtToken, bookController.deleteBook);
 
 module.exports = router;

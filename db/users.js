@@ -1,14 +1,14 @@
 module.exports = [
   {
     id: 1,
-    email: "mario@testemail.com",
+    email: "mario@test.com",
     name: "Mario",
-    password: "",
+    password: "$2b$10$tdKbOWZgt3jlJusNRSRczeh7gxL4fSru8l5PAzV36igAb0fU9KhcS",
   },
   {
-    id: 1,
-    email: "luigi@testemail.com",
+    id: 2,
+    email: "luigi@test.com",
     name: "Luigi",
-    password: "",
+    password: "$2b$10$tdKbOWZgt3jlJusNRSRczeh7gxL4fSru8l5PAzV36igAb0fU9KhcS",
   },
 ];

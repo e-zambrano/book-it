@@ -9,8 +9,9 @@ function signIn(request, response) {
 
   if (!user || !comparePasswords(password, user.password)) {
     response.status(400).send("incorrect email or password");
+    return;
   }
-  const token = generateToke(user.id);
+  const token = generateJwtToke(user.id);
   response.json({ token });
 }
 
@@ -21,14 +22,40 @@ function signUp(request, response) {
 
   if (user) {
     response.status(400).send("email already used");
+    return;
   }
 
   const encryptedPassword = encryptPassword(password);
   const newUser = createUser(email, encryptedPassword, name);
-  const token = generateToke(newUser.id);
+  const token = generateJwtToke(newUser.id);
   response.json({ token });
 }
 
+//middleware
+function authenticateJwtToken(request, response, next) {
+  const { authorization } = request.headers;
+  const token = authorization && authorization.split(" ")[1];
+
+  if (!token) {
+    response.status(401).send("Token missing");
+    return;
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, function (error, user) {
+    if (error) {
+      response.status(403).send("Invalid token");
+      return;
+    }
+
+    request.user = user;
+
+    next();
+  });
+
+  next();
+}
+
+// helper functions
 function comparePasswords(plainTextPassword, encryptedPassword) {
   const areEqual = bcrypt.compareSync(plainTextPassword, encryptedPassword);
   return areEqual;
@@ -40,9 +67,9 @@ function encryptPassword(plainTextPassword) {
   return hash;
 }
 
-function generateToke(id) {
-  const token = jwt.sign({ id }, "secret");
+function generateJwtToke(id) {
+  const token = jwt.sign({ id }, process.env.JWT_SECRET);
   return token;
 }
 
-module.exports = { signIn, signUp };
+module.exports = { signIn, signUp, authenticateJwtToken };

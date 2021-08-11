@@ -1,8 +1,11 @@
 const { assign, find, remove } = require("lodash");
 const books = require("../db/books");
 
-function getAllBooks(_, response) {
-  response.json(books);
+function getAllBooks(request, response) {
+  const { user } = request;
+
+  const booksByUser = find(books, { userId: user.id });
+  response.json(booksByUser);
 }
 
 function getBookById(request, response) {
@@ -47,6 +50,7 @@ function findBook(id) {
 
   if (!book) {
     response.send(`No book found. Book Id: ${id}`);
+    return;
   }
 
   return book;
