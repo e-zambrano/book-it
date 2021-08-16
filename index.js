@@ -7,7 +7,7 @@ const usersRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 
 const expressApp = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 expressApp.use(express.urlencoded({ extended: true }));
 expressApp.use(express.json());

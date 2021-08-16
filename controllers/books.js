@@ -1,10 +1,10 @@
-const { assign, find, remove } = require("lodash");
+const { assign, filter, remove } = require("lodash");
 const books = require("../db/books");
 
 function getAllBooks(request, response) {
   const { user } = request;
 
-  const booksByUser = find(books, { userId: user.id });
+  const booksByUser = filter(books, { userId: user.id });
   response.json(booksByUser);
 }
 
