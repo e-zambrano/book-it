@@ -15,8 +15,10 @@ function getBookById(request, response) {
 }
 
 function createBook(request, response) {
+  const { user } = request;
   const bookFromRequest = request.body;
   bookFromRequest.id = books.length + 1;
+  bookFromRequest.userId = user.id;
 
   books.push(bookFromRequest);
 

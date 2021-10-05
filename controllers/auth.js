@@ -11,7 +11,7 @@ function signIn(request, response) {
     response.status(400).send("incorrect email or password");
     return;
   }
-  const token = generateJwtToke(user.id);
+  const token = generateJwtToken(user.id);
   response.json({ token });
 }
 
@@ -27,7 +27,7 @@ function signUp(request, response) {
 
   const encryptedPassword = encryptPassword(password);
   const newUser = createUser(email, encryptedPassword, name);
-  const token = generateJwtToke(newUser.id);
+  const token = generateJwtToken(newUser.id);
   response.json({ token });
 }
 
@@ -67,7 +67,7 @@ function encryptPassword(plainTextPassword) {
   return hash;
 }
 
-function generateJwtToke(id) {
+function generateJwtToken(id) {
   const token = jwt.sign({ id }, process.env.JWT_SECRET);
   return token;
 }
