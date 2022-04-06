@@ -5,7 +5,12 @@ function getAllBooks(request, response) {
   const { user } = request;
 
   const booksByUser = filter(books, { userId: user.id });
-  response.json(booksByUser);
+  response.json(
+    booksByUser.map((book) => {
+      delete book.userId; //Don't need to send userId
+      return book;
+    })
+  );
 }
 
 function getBookById(request, response) {

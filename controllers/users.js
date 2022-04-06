@@ -10,6 +10,8 @@ function getUserById(request, response) {
     return;
   }
 
+  //prevent sending password
+  delete user.password;
   response.json(user);
 }
 
