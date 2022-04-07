@@ -16,8 +16,14 @@ expressApp.use(booksRoute);
 expressApp.use(usersRoute);
 expressApp.use(authRoute);
 
+// expressApp.get("/", function (_, response) {
+//   response.send("Express App running!");
+// });
+
+expressApp.use(express.static(__dirname + "/client/build"));
+
 expressApp.get("/", function (_, response) {
-  response.send("Express App running!");
+  response.sendFile(__dirname + "/client/build/index.html");
 });
 
 expressApp.listen(port, function () {
